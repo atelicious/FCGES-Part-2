@@ -43,7 +43,7 @@ Build a simple trading system as a pure REST API with the endpoints given below.
 2. If successful, the user will be logged out of the trading API and the token will be deleted in the database.
 
 
-#### ***To get customer portfolio valuation:***
+#### ***To get the customer portfolio valuation:***
 
 1. Login to the trading API and set the header authorization token to the token obtained when logging in. 
 2. Create a get request to `api/customer` endpoint using the token as the authorization token.
@@ -55,7 +55,6 @@ Build a simple trading system as a pure REST API with the endpoints given below.
                 "stocks": "user",
                 "portfolio valuation": "1000.00"
             }`
-5. Logout from the trading API by sending a post request to the `api/logout` endpoint using the token as the header authentication token.
 
 #### ***To get the customer data for specific stock:***
 
@@ -74,7 +73,6 @@ Build a simple trading system as a pure REST API with the endpoints given below.
                     "stock_qty": 10,
                     "price": "-6655.0000"
                 }]`
-5. Logout from the trading API by sending a post request to the `api/logout` endpoint using the token as the header authentication token.
 
 #### ***To place a buy/sell stock order:***
 
@@ -87,7 +85,7 @@ Build a simple trading system as a pure REST API with the endpoints given below.
                                             "stock_qty": 10,
                                             "price": 6550.0
                                         }`
-     Example json input for sell order: `{
+    - Example json input for sell order: `{
                                             "stock_id" : "AC",
                                             "stock_qty": 10,
                                             "price": -6550.0
@@ -104,7 +102,6 @@ Build a simple trading system as a pure REST API with the endpoints given below.
                 "stock_qty": 10,
                 "price": "-6550.0"
             }`
-5. Logout from the trading API by sending a post request to the `api/logout` endpoint using the token as the header authentication token.
 
 <br>
 
@@ -237,8 +234,8 @@ This API provides several endpoints, each with different use cases. For example,
     - Additional Notes:
         - In order to access the API endpoints that require authentication, the user must first login through the api/login endpoint to get an authorization token.
         - This authorization token is needed to be added on the headers of the requests being made
-        to endpoints that require authentication. For example:
-            - `curl -X GET http://localhost:8080/api/customer -H 'Authorization: Token 36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f'`
+        to endpoints that require authentication. 
+            - For example: `curl -X GET http://localhost:8080/api/customer -H 'Authorization: Token 36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f'`
 - ***api/logout***
     - Description: This endpoint accepts a post request containing the valid `token` in the header of the request and logs out the current user.
     - Allowed Method(s): `POST`
