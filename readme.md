@@ -83,7 +83,6 @@ This API provides several endpoints, each with different use cases. For example,
             }, . . .
             }`
 <br>
-<br>
 - api/customer
     - Description: This endpoint returns a json object containing the `name` of the user currently logged in, together with the `portfolio valuation` of that user.
     - Allowed Method(s): `GET`
@@ -94,7 +93,6 @@ This API provides several endpoints, each with different use cases. For example,
                 "portfolio valuation": "1000.00"
             }`
     - Note: The `portfolio valuation` is encoded as a string as decimal values cannot be serialized in JSON format.
-<br>
 <br>
 - api/customer/`<str:stock_id>`
     - Description: This endpoint returns the transactions that the user had made under a specific stock.
@@ -114,7 +112,6 @@ This API provides several endpoints, each with different use cases. For example,
             - `[]`
     - Note: The `<str:stock_id>` is a string as decimal that represents the stock that the user wants to get specifically. For example, if the user want to obtain information about their transactions
     in stock `AC` then the url would be something like this: `https://localhost:8080/api/customer/AC`
-<br>
 <br>
 - api/order
     - Description: This endpoint accepts a json object containing the `stock id`, `quantity` of the stock and the total `price` of the order. 
@@ -141,7 +138,6 @@ This API provides several endpoints, each with different use cases. For example,
         the current price of `AC` multiplied by the quantity. 
         - The user can only sell stocks that they own, meaning if the user only has `10` stocks of `AC` in their portfolio then they can only sell a maximum of `10` stocks of `AC`.
 <br>
-<br>
 - api/login
     - Description: This endpoint accepts a json object containing the valid `username` and `password` of the user.
     Returns a json object containing the `token` needed for authenticating requests and the `expiry` of this token.
@@ -162,7 +158,6 @@ This API provides several endpoints, each with different use cases. For example,
         - This authorization token is needed to be added on the headers of the requests being made
         to endpoints that require authentication. For example:
             - `curl -X GET http://localhost:8080/customer -H 'Authorization: Token 36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f'`
-<br>
 <br>
 - api/logout
     - Description: This endpoint accepts a post request containing the valid `token` in the header of the request and logs out the current user.
