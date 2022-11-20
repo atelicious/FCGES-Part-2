@@ -21,8 +21,91 @@ Build a simple trading system as a pure REST API with the endpoints given below.
 <br>
 
 ## ***Trading System API Documentation***
+<br>
 
-## ***How to use this API***
+### ***How to use this API***
+<br>
+
+#### ***To log in to the trading API:***
+1. Log in to the trading API by creating a post request to the endpoint api/login containing the valid username and password of the user.
+
+    - Example input json format: `{"username":"username", "password":"password"}`
+
+2. If successful, the user will recieve an output like this: `{"expiry": "2022-11-21T01:04:01.567006Z", "token": "36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f"}`
+
+3. Use the provided `token` from the return data in step 2 as the header authorization token for the proceeding requests.
+
+#### ***To log out of the trading API:***
+1. Log out of the trading API by creating a post request to the endpoint `api/logout` containing the header authentication token of the user.
+
+    - Example: `curl -X POST http://localhost:8080/api/logout -H 'Authorization: Token 36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f'`
+
+2. If successful, the user will be logged out of the trading API and the token will be deleted in the database.
+
+
+#### ***To get customer portfolio valuation:***
+
+1. Login to the trading API and set the header authorization token to the token obtained when logging in. 
+2. Create a get request to `api/customer` endpoint using the token as the authorization token.
+
+    - Example: `curl -X GET http://localhost:8080/api/customer -H 'Authorization: Token 36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f'`
+3. If successful, the get request will return the data containing the `name` and `portfolio value` of the user.
+
+    - Example: `{
+                "stocks": "user",
+                "portfolio valuation": "1000.00"
+            }`
+5. Logout from the trading API by sending a post request to the `api/logout` endpoint using the token as the header authentication token.
+
+#### ***To get the customer data for specific stock:***
+
+1. Login to the trading API and set the header authorization token to the token obtained when logging in. 
+2. Use the provided `token` from the return data in step 1 as the header authorization token for the proceeding requests.
+3. Create a get request to `api/customer/<str:id>` endpoint using the token as the authorization token and `<str:id>` should represent the stock that the user wants to view e.g. `AC`, `BDO`, `AEV` etc.
+
+    - Example: `curl -X GET http://localhost:8080/api/customer/AC -H 'Authorization: Token 36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f'`
+4. If successful, the get request will return the data containing the `name` and `portfolio value` of the user.
+
+    - Example: `[{
+                    "stock_qty": 10,
+                    "price": "6655.0000"
+                },
+                {
+                    "stock_qty": 10,
+                    "price": "-6655.0000"
+                }]`
+5. Logout from the trading API by sending a post request to the `api/logout` endpoint using the token as the header authentication token.
+
+#### ***To place a buy/sell stock order:***
+
+1. Login to the trading API and set the header authorization token to the token obtained when logging in. 
+2. Use the provided `token` from the return data in step 1 as the header authorization token for the proceeding requests.
+3. Create a post request to `api/order/` endpoint containing the stock id, quantity and price of the order that is being placed. 
+    To create a buy order, the price of the order should be set to positive while to create a sell order the price should be set to negative.
+    - Example json input for buy order: `{
+                                            "stock_id" : "AC",
+                                            "stock_qty": 10,
+                                            "price": 6550.0
+                                        }`
+     Example json input for sell order: `{
+                                            "stock_id" : "AC",
+                                            "stock_qty": 10,
+                                            "price": -6550.0
+                                        }`
+4. If successful, the post request will return the data reflecting the data that is saved in the database.
+
+    - Example output for buy order: `{
+                "stock_name" : "Ayala Corporation",
+                "stock_qty": 10,
+                "price": "6550.0"
+            }`
+    - Example output for sell order: `{
+                "stock_name" : "Ayala Corporation",
+                "stock_qty": 10,
+                "price": "-6550.0"
+            }`
+5. Logout from the trading API by sending a post request to the `api/logout` endpoint using the token as the header authentication token.
+
 <br>
 
 ### ***Installation***
@@ -38,7 +121,7 @@ or download the code files from github as zip.
 then install these following packages manually:
 - Django Framework 
 - Django REST Framework 
-- knox 
+- django-rest-knox 
 
 or by using the provided requirements.txt file:
 <br>
@@ -155,7 +238,7 @@ This API provides several endpoints, each with different use cases. For example,
         - In order to access the API endpoints that require authentication, the user must first login through the api/login endpoint to get an authorization token.
         - This authorization token is needed to be added on the headers of the requests being made
         to endpoints that require authentication. For example:
-            - `curl -X GET http://localhost:8080/customer -H 'Authorization: Token 36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f'`
+            - `curl -X GET http://localhost:8080/api/customer -H 'Authorization: Token 36e078e307adc010c8591903d6e12fcd65158966c6ba9d75d5ae5b90ff2faa9f'`
 - ***api/logout***
     - Description: This endpoint accepts a post request containing the valid `token` in the header of the request and logs out the current user.
     - Allowed Method(s): `POST`
