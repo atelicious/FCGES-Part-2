@@ -1,0 +1,16 @@
+{
+    "stock_id": "AC",
+    "stock_qty": 10,
+    "price": 6655.0
+}
+
+{
+    "username": "user1",
+    "email": "user1@email.com",
+    "password": "09193367316e"
+}
+
+{
+    "username": "admin",
+    "password": "password"
+}
